@@ -11,7 +11,7 @@ public class LightSwitch : MonoBehaviour
     public bool reusable;
 
 
-    private bool unused = true, dark = false, withinRange = true;
+    private bool unused = true, dark = false, withinRange = false;
     private float count = 0;
 
 
@@ -37,17 +37,22 @@ public class LightSwitch : MonoBehaviour
     {
         if (withinRange && Input.GetKeyDown("e"))
         {
-            targetList.ForEach(i =>
+            if(unused || reusable)
             {
-                if (i.active == false)
-                    i.SetActive(true);
-                else
-                    i.SetActive(false);
+                this.targetList.ForEach(i =>
+                {
+                    if (i.active == false)
+                        i.SetActive(true);
+                    else
+                        i.SetActive(false);
+                });
 
-            });
+                unused = false;
+                dark = true;
 
-            unused = false;
-            dark = true;
+            }
+
+            
         }
 
 
